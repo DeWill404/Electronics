@@ -1,0 +1,207 @@
+/*---------------------------------------------*/
+input, textarea {
+	outline: none;
+	border: none;
+}
+
+input:focus, textarea:focus { border-color: transparent !important; }
+
+input::placeholder, textarea::placeholder { color: #aaaaaa; }
+
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ feedback ]*/
+.feedback-container {
+	width: 100%;  
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.feedback-wrapper {
+	background: rgba(33, 37, 41, 0.5);
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 50px;
+}
+
+.image-container {
+	width: 310px;
+	padding-top: 55px;
+}
+
+.image-container img { max-width: 100%; }
+
+
+/*------------------------------------------------------------------*/
+.form {
+	width: 390px;
+}
+
+.form-title {
+	display: block;
+	font-family: 'Playfair Display', serif;
+	font-weight: bolder;
+	font-size: 24px;
+	color: #333333;
+	line-height: 1.2;
+	text-align: left;	
+	padding-bottom: 36px;
+}
+
+input.input {
+	height: 50px;
+	border-radius: 25px;
+	padding: 0 30px 0 50px;
+}
+
+input.input[name="email"] {
+	padding: 0 30px 0 54px;
+}
+
+textarea.input {
+	min-height: 150px;
+	border-radius: 25px;
+	padding: 14px 30px;
+}
+
+
+/*---------------------------------------------*/
+.input-wrapper {
+	position: relative;
+	width: 100%;
+	z-index: 1;
+	margin-bottom: 10px;
+}
+
+.input {
+	display: block;
+	width: 100%;
+	background: #e6e6e6;
+	font-family: 'Playfair Display', serif;
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 1.5;
+	color: #666666;
+}
+
+
+/*------------------------------------------------------------------
+[ Focus ]*/
+.input-focus {
+	display: block;
+	position: absolute;
+	border-radius: 25px;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0px 0px 0px 0px;
+	color: #000;
+}
+
+.input:focus + .input-focus { animation: anim-shadow 0.5s ease-in-out forwards; }
+
+@keyframes anim-shadow {
+	to {
+	box-shadow: 0px 0px 60px 25px;
+	opacity: 0;
+	}
+}
+
+.input-icon {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	padding-left: 30px;
+	pointer-events: none;
+	color: #aaaaaa;
+	font-size: 15px;
+	transition: all 0.4s;
+}
+
+.input:focus + .input-focus + .input-icon {
+	color: #000;
+	padding-left: 22px;
+}
+
+
+/*------------------------------------------------------------------
+[ Button ]*/
+.btn-container {
+	width: 100%;
+	padding-top: 20px;
+}
+
+.submit-btn {
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	background: #846add;
+	font-family: 'Playfair Display', serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #fff;
+	transition: all 0.4s;
+}
+
+.submit-btn:hover { background: #333333; }
+
+
+/*------------------------------------------------------------------
+[ Alert validate ]*/
+.validate-input {
+	position: relative;
+}
+
+.alert-validate::before {
+	content: attr(data-validate);
+	position: absolute;
+	max-width: 70%;
+	background-color: white;
+	border: 1px solid #c80000;
+	border-radius: 13px;
+	padding: 4px 25px 4px 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 8px;
+	pointer-events: none;
+	font-family: 'Playfair Display', serif;
+	color: #c80000;
+	font-size: 13px;
+	line-height: 1.4;
+	text-align: left;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.4s;
+}
+
+.alert-validate::after {
+	content: "\f06a";
+	font-family: FontAwesome;
+	display: block;
+	position: absolute;
+	color: #c80000;
+	font-size: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 13px;
+}
+
+.alert-validate:hover:before {
+	visibility: visible;
+	opacity: 1;
+}
