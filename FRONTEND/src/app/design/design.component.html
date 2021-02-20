@@ -1,0 +1,39 @@
+<title> {{ title }} </title>
+
+<main class="container">
+
+	<div class="row">
+		
+		<!-- Side Nav container -->
+		<div class="col-md-3">
+
+			<div class="accordion" id="accordionExample">
+
+				<div class="accordion-item rounded-2 w-100 my-2">
+					<h2 class="accordion-header" id="header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#type-container" aria-expanded="false" aria-controls="type-container">
+							Types
+						</button>
+					</h2>
+					<div id="type-container" class="accordion-collapse collapse" aria-labelledby="header" data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							<ul id="type-list">
+								<li class="type" style="color:black;" (click)='switchDesign(0)'>Resistor</li>
+								<li class="type" (click)='switchDesign(1)'>Transistor</li>
+								<li class="type" (click)='switchDesign(2)'>Capacitor</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Button to add new design -->
+			<button class="btn btn-outline-secondary w-100 my-2">New</button>
+		</div>
+
+		<!-- Design code -->
+		<div class="col-md-9">
+		</div>
+	</div>
+
+</main>

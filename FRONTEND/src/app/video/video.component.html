@@ -1,0 +1,30 @@
+<title> {{ title }} </title>
+
+<main class="container">
+
+	<div class="row">
+		<div class="col-md-4 col-lg-3 my-3">
+			<video src="../../assets/video/video1.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(1)'></video>
+		</div>
+		<div class="col-md-4 col-lg-3 my-3">
+			<video src="../../assets/video/video2.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(2)'></video>
+		</div>
+		<div class="col-md-4 col-lg-3 my-3">
+			<video src="../../assets/video/video3.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(3)'></video>
+		</div>
+		<div class="col-md-4 col-lg-3 my-3">
+			<video src="../../assets/video/video1.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(4)'></video>
+		</div>
+	</div>
+
+	<div id="video-overlay" class="visually-hidden">
+		<i id="left-arrow" class="bi bi-chevron-left btn rounded-circle" (click)=preVideo()></i>
+		<i id="right-arrow" class="bi bi-chevron-right btn rounded-circle" (click)=nextVideo()></i>
+		<i id="cancel-overlay" class="bi bi-x-octagon btn btn-light rounded-3" (click)=cancelOverlay()></i>
+		<video id="videoPlayer" src=".." class="rounded-3" controls autoplay></video>
+	</div>
+	
+	<div class="row">
+		<button class="btn btn-outline-secondary m-3 mx-auto w-auto">Upload Video</button>
+	</div>
+</main>
