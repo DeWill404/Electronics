@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../app.service';
 import { ScrollingService } from './video.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class VideoComponent implements OnInit {
 	videoList:any;
 
 
-	constructor(scrollService:ScrollingService) { 
+	constructor(scrollService:ScrollingService, private loginService:LoginService) { 
 		this.scrollService = scrollService;
 	}
 
@@ -24,6 +25,18 @@ export class VideoComponent implements OnInit {
 		this.videoContainer = <HTMLDivElement>document.getElementById("video-overlay");
 		this.videoPlayer =  <HTMLVideoElement>document.getElementById("videoPlayer");
 		this.videoList =  document.getElementsByClassName("videos");
+	}
+
+	/* Metho to upload new videos */
+	uploadVideo() {
+		if ( this.loginService.isLogged() ) {
+
+		} else {
+			const toast = <HTMLDivElement>document.getElementById("toast");
+			(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Please logging first, to upload new video.";
+			toast.classList.remove('hide');
+			toast.classList.add('show');
+		}
 	}
 
 	/* Function to play Video in Lightbox */

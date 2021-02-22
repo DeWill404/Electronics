@@ -125,7 +125,7 @@ export class AppComponent {
 		return verify;
 	}
 	/* Function to login & Register */
-	submit(index: number) {password
+	submit(index: number) {
 		// Get all input tags
 		let inputList = document.getElementsByClassName('inputLog');
 
@@ -168,13 +168,13 @@ export class AppComponent {
 	login(inputList:HTMLCollection) {
 		// Get data from DB
 		this.loginService.get('logins', (<HTMLInputElement>inputList[0]).value).subscribe( (data:any) => {
-			if (data!=null && (<HTMLInputElement>inputList[1]).value==data[0]['password']) {
+			if (data!=[] && (<HTMLInputElement>inputList[1]).value==data[0]['password']) {
 				this.btnText = (<HTMLInputElement>inputList[0]).value.substring(0, 10);
 				this.showToast("Login Successful", true);
 				this.cancel_login();
 				this.loginService.setLogedIn();
 			} else {
-				this.showToast("Invalid Data", false);
+				this.showToast("Invalid password", false);
 			}
 		} );
 	}
@@ -182,8 +182,7 @@ export class AppComponent {
 
 	/* Method to register user in database */
 	register(inputList:HTMLCollection) {
-		// Save data to DB
-		this.loginService.post('logins', { 'email':(<HTMLInputElement>inputList[3]).value, 'password':(<HTMLInputElement>inputList[4]).value}).subscribe((data:any) => {
+		this.loginService.post('logins', { 'email':(<HTMLInputElement>inputList[3]).value.trim(), 'password':(<HTMLInputElement>inputList[4]).value.trim()}).subscribe((data:any) => {
 			if (data != null) {
 				this.btnText = data['email'].substring(0, 10);
 				this.showToast("Regiteration Successful", true);

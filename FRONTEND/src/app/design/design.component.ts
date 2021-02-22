@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../app.service';
 
 @Component({
 	selector: 'app-design',
@@ -11,10 +12,22 @@ export class DesignComponent implements OnInit {
 	INDEX = 0;
 	typeList:any;
 
-	constructor() { }
+	constructor(private loginService:LoginService) { }
 
 	ngOnInit(): void {
 		this.typeList = document.getElementsByClassName('type');
+	}
+
+	/* Method to create new designs */
+	newDesigns() {
+		if ( this.loginService.isLogged() ) {
+
+		} else {
+			const toast = <HTMLDivElement>document.getElementById("toast");
+			(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Please logging first, to create new designs.";
+			toast.classList.remove('hide');
+			toast.classList.add('show');
+		}
 	}
 
 	/* Function to switchs between Designs */

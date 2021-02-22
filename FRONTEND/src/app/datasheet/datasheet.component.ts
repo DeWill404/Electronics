@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../app.service';
 
 @Component({
 	selector: 'app-datasheet',
@@ -11,9 +12,21 @@ export class DatasheetComponent implements OnInit {
 	INDEX = 0;
 	divList = document.getElementsByClassName("tabs");
 
-	constructor() { }
+	constructor(private loginService:LoginService) { }
 
 	ngOnInit(): void {
+	}
+
+	/* Metho to add Datasheets */
+	addSheets() {
+		if ( this.loginService.isLogged() ) {
+
+		} else {
+			const toast = <HTMLDivElement>document.getElementById("toast");
+			(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Please logging first, to add new datasheets.";
+			toast.classList.remove('hide');
+			toast.classList.add('show');
+		}
 	}
 
 	/* Function to switch Datasheet */
