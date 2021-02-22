@@ -6,22 +6,24 @@ import { ScrollingService } from './video/video.service';
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
-}) 
+})
 
 export class AppComponent {
 
 	btnText: String;
 	errText: any;
 	scrollService:ScrollingService;
+	loginService:LoginService;
 
 	constructor(loginService:LoginService, scrollService:ScrollingService) {
+		// Get object
+		this.loginService = loginService;
 		this.scrollService = scrollService;
+
 		// Set Login Btn text
-		if ( loginService.isLogged() )
-			this.btnText = loginService.getEmail();
-		else
-			this.btnText = "Log in";
+		this.btnText = "Log in";
 	}
+
 
 	/* Function to display login window */
 	launch_login() {
@@ -30,6 +32,7 @@ export class AppComponent {
 		// Remove hide class from login
 		(<HTMLDivElement>document.getElementById('log-in')).classList.remove('visually-hidden');
 	}
+
 
 	/* Function to Cancel Login Window */
 	cancel_login() {
@@ -54,6 +57,7 @@ export class AppComponent {
 		(<HTMLDivElement>document.getElementById('log-in')).classList.add('visually-hidden');
 	}
 
+
 	/* Switch visibility btn Login(0) & Register(0) option */
 	switchVisibility(index: number) {
 		if (index == 0) {	// Login -> Register
@@ -67,13 +71,20 @@ export class AppComponent {
 		}
 	}
 
-	/* Metho to show Toast of given text */
-	showToast(msg:string) {
+
+	/* Method to show Toast of given text */
+	showToast(msg:string, success:boolean) {
+		if (success)
+			(<HTMLButtonElement>document.getElementById("login-submit")).innerHTML = '<i class="fa fa-check"></i>';
+		else
+			(<HTMLButtonElement>document.getElementById("login-submit")).innerHTML = '<i class="fa fa-remove"></i>';
+
 		const toast = <HTMLDivElement>document.getElementById("toast");
 		(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = msg;
 		toast.classList.remove('hide');
 		toast.classList.add('show');
 	}
+
 
 	/* Method to submit data & take action */
 	verifyInputs(inputList:HTMLCollection, index:number) {
@@ -91,7 +102,7 @@ export class AppComponent {
 					verify = false;
 				}
 				break;
-		
+
 			case 1:		// Verify for Register
 				if ( (<HTMLInputElement>inputList[3]).getAttribute('type')=='email' && (<HTMLInputElement>inputList[3]).value.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/)==null ) {
 					this.errText = '• Invalid Email ';
@@ -105,7 +116,7 @@ export class AppComponent {
 					this.errText += '• Password is not same ';
 					verify = false;
 				}
-				if ( (<HTMLInputElement>inputList[4]).checked == false ) {
+				if ( (<HTMLInputElement>inputList[6]).checked == false ) {
 					this.errText += '• Checkbox is not ticked';
 					verify = false;
 				} break;
@@ -114,60 +125,74 @@ export class AppComponent {
 		return verify;
 	}
 	/* Function to login & Register */
-	submit(index: number) {
+	submit(index: number) {password
 		// Get all input tags
 		let inputList = document.getElementsByClassName('inputLog');
 
 		switch (index) {
-			case 0:		// For Login 
+			case 0:		// For Login
 				// Set submit arrow to spinner
 				(<HTMLButtonElement>document.getElementById("login-submit")).innerHTML = '<i class="fa fa-spinner fa-pulse"></i>';
-				
+
 				// Verify input Data
 				if (this.verifyInputs(inputList, index)) {
-					setTimeout(() => {
-						// Set Submit spinner to success tick
-						(<HTMLButtonElement>document.getElementById("login-submit")).innerHTML = '<i class="fa fa-check"></i>';
-
-						// Show Success Toast
-						this.showToast("Login Successful.");
-					}, 2000);
+					setTimeout(() => this.login(inputList), 2000);
 				} else {
-					setTimeout(() => {
-						// Set Submit spinner to fail cross
-						(<HTMLButtonElement>document.getElementById("login-submit")).innerHTML = '<i class="fa fa-remove"></i>';
-
-						// Show Fail Toast
-						this.showToast(this.errText);
-					}, 2000);
+					setTimeout(() => this.showToast(this.errText, false), 2000);
 				}
 				break;
-		
+
 			case 1:		// For Register
 				// Set submit arrow to spinner
 				(<HTMLButtonElement>document.getElementById("register-submit")).innerHTML = '<i class="fa fa-spinner fa-pulse"></i>';
-				
+
 				// Verify input Data
 				if (this.verifyInputs(inputList, index)) {
 					setTimeout(() => {
+						this.register(inputList);
 						// Set Submit spinner to success tick
 						(<HTMLButtonElement>document.getElementById("register-submit")).innerHTML = '<i class="fa fa-check"></i>';
 
 						// Show Success Toast
-						this.showToast("Register Successful.");
+						this.showToast("Register Successful.", true);
 					}, 2000);
 				} else {
-					
-			setTimeout(() => {
-				// Set Submit spinner to fail cross
-				(<HTMLButtonElement>document.getElementById("register-submit")).innerHTML = '<i class="fa fa-remove"></i>';
-
-				// Show Fail Toast
-						this.showToast(this.errText);
-			}, 2000);
+					setTimeout(() => this.showToast(this.errText, false), 2000);
 				}
 				break;
 		}
+	}
+
+
+	/* Method to login in database */
+	login(inputList:HTMLCollection) {
+		// Get data from DB
+		this.loginService.get('logins', (<HTMLInputElement>inputList[0]).value).subscribe( (data:any) => {
+			if (data!=null && (<HTMLInputElement>inputList[1]).value==data[0]['password']) {
+				this.btnText = (<HTMLInputElement>inputList[0]).value.substring(0, 10);
+				this.showToast("Login Successful", true);
+				this.cancel_login();
+				this.loginService.setLogedIn();
+			} else {
+				this.showToast("Invalid Data", false);
+			}
+		} );
+	}
+
+
+	/* Method to register user in database */
+	register(inputList:HTMLCollection) {
+		// Save data to DB
+		this.loginService.post('logins', { 'email':(<HTMLInputElement>inputList[3]).value, 'password':(<HTMLInputElement>inputList[4]).value}).subscribe((data:any) => {
+			if (data != null) {
+				this.btnText = data['email'].substring(0, 10);
+				this.showToast("Regiteration Successful", true);
+				this.cancel_login();
+				this.loginService.setLogedIn();
+			} else {
+				this.showToast("Email already registered", false);
+			}
+		});
 	}
 
 }

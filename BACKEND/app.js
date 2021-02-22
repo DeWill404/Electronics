@@ -51,19 +51,19 @@ app.use( (req, res, next) => {
  * });
  */
 
-// Request for saving data to DB
+// Request for saving Login data to DB
 app.post('/logins', (req, res) => {
 	(new Login( req.body ))
 		.save()
 		.then(login => res.send(login))
-		.catch(error => res.send(error));
+		.catch(error => res.send(''));
 });
 
-// Request for getting a email from DB
+// Request for getting a login password from DB
 app.get('/logins/:email', (req, res)=>{
 	Login.find({ 'email':req.params.email })
 		.then(login => res.send(login))
-		.catch(error => console.log(error));
+		.catch(error => res.send(''));
 });
 
 // Start BACKEND server

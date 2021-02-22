@@ -1,0 +1,17 @@
+POST http://localhost:3000/logins HTTP/1.1
+Content-Type: application/json
+
+{
+	"email": "r.tt@m.m",
+	"password": "abcd"
+}
+
+###
+
+GET http://localhost:3000/logins/mr.siddique@gmail.com HTTP/1.1
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/logins HTTP/1.1
+Content-Type: application/json
