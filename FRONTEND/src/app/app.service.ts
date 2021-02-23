@@ -13,15 +13,15 @@ export class LoginService{
 		this.isLogedIn = false;
 		this.userEmail = "";
 		this.http = http;
-		this.ROOT_URL = 'http://localhost:3000';
+		this.ROOT_URL = 'http://localhost:3000/logins';
 	}
 
-	get(uri:string, email:string) {
-		return this.http.get(`${this.ROOT_URL}/${uri}/${email}`);
+	login(email:string) {
+		return this.http.get(`${this.ROOT_URL}/${email}`);
 	}
 
-	post(uri:string, payload:Object) {
-		return this.http.post(`${this.ROOT_URL}/${uri}`, payload); 
+	register(payload:Object) {
+		return this.http.post(this.ROOT_URL, payload); 
 	}
 
 	setLogedIn() {this.isLogedIn = true; }

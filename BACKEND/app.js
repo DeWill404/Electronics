@@ -3,10 +3,11 @@ const express = require('express');
 const app = express();
 
 // Get Moongoose
-const mongoose = require('./database/mongoose')
+const mongoose = require('./database/mongoose');
 
-// Get login model
-const Login = require('./database/modules/login')
+// Get All models
+const Login = require('./database/modules/login');
+const Design = require('./database/modules/design');
 
 // Save data in DB as JSON
 app.use(express.json());
@@ -51,6 +52,8 @@ app.use( (req, res, next) => {
  * });
  */
 
+
+/************** Login APIS STARTS ***************/
 // Request for saving Login data to DB
 app.post('/logins', (req, res) => {
 	(new Login( req.body ))
@@ -65,6 +68,26 @@ app.get('/logins/:email', (req, res)=>{
 		.then(login => res.send(login))
 		.catch(error => res.send(''));
 });
+/************** Login APIS ENDS *****************/
+
+
+/************ DESIGN APIS STARTS **************/
+// Request to Save new design Data in DB
+app.post('/designs', (req, res) => {
+	(new Design( req.body ))
+		.save()
+		.then(design => res.send(design))
+		.catch(error => res.send(''));
+});
+
+// Request for all designs from DB
+app.get('/designs', (req, res)=>{
+	Design.find({})
+		.then(designs => res.send(designs))
+		.catch(error => res.send(''));
+});
+/************ DESIGN APIS ENDS ****************/
+
 
 // Start BACKEND server
 app.listen(3000, ()=>console.log("Server created at 3000."));
