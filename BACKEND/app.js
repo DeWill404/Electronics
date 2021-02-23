@@ -8,6 +8,7 @@ const mongoose = require('./database/mongoose');
 // Get All models
 const Login = require('./database/modules/login');
 const Design = require('./database/modules/design');
+const Video = require('./database/modules/video');
 
 // Save data in DB as JSON
 app.use(express.json());
@@ -19,39 +20,6 @@ app.use( (req, res, next) => {
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
 } );
-
-/**
- * READALL
- * app.get('/lists', (req, res)=>{
- * 		List.find({})
- * 			.then(lists => res.send(lists))
- * 			.catch(error => console.log(error));
- * READONE
- * app.get('/lists/:listId', (req, res)=>{
- * 		List.find({ _id:req.params.listId })
- * 			.then(list => res.send(list))
- * 			.catch(error => console.log(error));
- * SAVE
- * app.post('/lists', (req, res)=>{
- * 		(new List({'title':req.body.title}))
- * 			.save()
- * 			.then(list => res.send(list))
- * 			.catch(error => console.log(error));
- * });
- * UPDATE
- * app.patch('/lists:listId', (req, res)=>{
- * 		List.findOneAndUpdate({_id:req.params.listId}, {$set:req.body})
- * 			.then(list => res.send(list))
- * 			.catch(error => console.log(error));
- * });
- * DELETE
- * app.patch('/lists:listId', (req, res)=>{
- * 		List.findByIdAndDelete(req.params.listId)
- * 			.then(list => res.send(list))
- * 			.catch(error => console.log(error));
- * });
- */
-
 
 /************** Login APIS STARTS ***************/
 // Request for saving Login data to DB
@@ -87,6 +55,24 @@ app.get('/designs', (req, res)=>{
 		.catch(error => res.send(''));
 });
 /************ DESIGN APIS ENDS ****************/
+
+
+/************ VIDEO APIS STARTS **************/
+// Request to upload Video link in DB
+app.post('/videos', (req, res) => {
+	(new Video( req.body ))
+		.save()
+		.then(video => res.send(video))
+		.catch(error => res.send(''));
+});
+
+// Request for all videos from DB
+app.get('/videos', (req, res)=>{
+	Video.find({})
+		.then(videos => res.send(videos))
+		.catch(error => res.send(''));
+});
+/************ VIDEO APIS ENDS ****************/
 
 
 // Start BACKEND server

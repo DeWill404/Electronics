@@ -3,17 +3,8 @@
 <main class="container">
 
 	<div class="row">
-		<div class="col-md-4 col-lg-3 my-3">
-			<video src="../../assets/video/video1.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(1)'></video>
-		</div>
-		<div class="col-md-4 col-lg-3 my-3">
-			<video src="../../assets/video/video2.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(2)'></video>
-		</div>
-		<div class="col-md-4 col-lg-3 my-3">
-			<video src="../../assets/video/video3.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(3)'></video>
-		</div>
-		<div class="col-md-4 col-lg-3 my-3">
-			<video src="../../assets/video/video1.mp4" style="width:100%" class="hover-shadow videos rounded-3" (click)='playVideo(4)'></video>
+		<div class="col-md-4 col-lg-3 my-3" *ngFor="let item of VIDEOS; let i=index">
+			<video style="width:100%; max-height:200px;" class="hover-shadow videos rounded-3" [src]="item['url']" (click)='playVideo(i)'></video>
 		</div>
 	</div>
 
@@ -24,7 +15,12 @@
 		<video id="videoPlayer" src=".." class="rounded-3" controls autoplay></video>
 	</div>
 	
-	<div class="row">
-		<button class="btn btn-outline-secondary m-3 mx-auto w-auto" (click)=uploadVideo()>Upload Video</button>
+	<div>
+		<button id="uploadBtn" class="btn btn-outline-secondary m-1 d-block mx-auto w-auto" (click)=uploadVideo()>Upload Video</button>
+		<input id="inputField" type="text" class="w-75 d-block mx-auto my-2 p-2 rounded border border-dark text-secondary text-center visually-hidden" placeholder="Video Link">
+		<div id="btn-container" class="visually-hidden" style="width: max-content; margin: auto;">
+			<button class="btn btn-outline-primary mx-1" (click)=saveVideo()>Save</button>
+			<button class="btn btn-outline-danger mx-1" (click)=cancelInput()>Cancel</button>
+		</div>
 	</div>
 </main>

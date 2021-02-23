@@ -16,6 +16,7 @@ video.hover-shadow {transition: 0.3s; }
 #video-overlay video {
 	width: 90%;
 	max-width: 900px;
+	max-height: 90%;
 	position: absolute;
 	margin: auto;
 	top: 50%;
