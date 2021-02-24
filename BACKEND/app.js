@@ -5,11 +5,6 @@ const app = express();
 // Get Moongoose
 const mongoose = require('./database/mongoose');
 
-// Get All models
-const Login = require('./database/modules/login');
-const Design = require('./database/modules/design');
-const Video = require('./database/modules/video');
-
 // Save data in DB as JSON
 app.use(express.json());
 
@@ -22,6 +17,9 @@ app.use( (req, res, next) => {
 } );
 
 /************** Login APIS STARTS ***************/
+// Get Login model
+const Login = require('./database/modules/login');
+
 // Request for saving Login data to DB
 app.post('/logins', (req, res) => {
 	(new Login( req.body ))
@@ -40,6 +38,9 @@ app.get('/logins/:email', (req, res)=>{
 
 
 /************ DESIGN APIS STARTS **************/
+// Get Design model
+const Design = require('./database/modules/design');
+
 // Request to Save new design Data in DB
 app.post('/designs', (req, res) => {
 	(new Design( req.body ))
@@ -58,6 +59,9 @@ app.get('/designs', (req, res)=>{
 
 
 /************ VIDEO APIS STARTS **************/
+// Get Video model
+const Video = require('./database/modules/video');
+
 // Request to upload Video link in DB
 app.post('/videos', (req, res) => {
 	(new Video( req.body ))
@@ -73,6 +77,27 @@ app.get('/videos', (req, res)=>{
 		.catch(error => res.send(''));
 });
 /************ VIDEO APIS ENDS ****************/
+
+
+/************ DATASHEET APIS STARTS **************/
+// Get Datasheet model
+const Datasheet = require('./database/modules/datasheet');
+
+// Request to upload Video link in DB
+app.post('/datasheets', (req, res) => {
+	(new Datasheet( req.body ))
+		.save()
+		.then(datasheet => res.send(datasheet))
+		.catch(error => res.send(''));
+});
+
+// Request for all videos from DB
+app.get('/datasheets', (req, res)=>{
+	Datasheet.find({})
+		.then(datasheets => res.send(datasheets))
+		.catch(error => res.send(''));
+});
+/************ DATASHEET APIS ENDS ****************/
 
 
 // Start BACKEND server
