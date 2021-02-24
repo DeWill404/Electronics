@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from './app.service';
 import { ScrollingService } from './video/video.service';
 
@@ -22,6 +22,20 @@ export class AppComponent {
 
 		// Set Login Btn text
 		this.btnText = "Log in";
+	}
+
+
+	ngOnInit(): void {
+		// If user is previously login
+		if (localStorage.getItem('login')) {
+			this.btnText = <string>localStorage.getItem('login');
+			this.loginService.setLogedIn();
+		}
+	}
+
+	/* Function to to logout */
+	logOut() {
+		console.log('press');
 	}
 
 
@@ -173,6 +187,7 @@ export class AppComponent {
 				this.showToast("Login Successful", true);
 				this.cancel_login();
 				this.loginService.setLogedIn();
+				localStorage.setItem('login', <string>this.btnText);
 			} else {
 				this.showToast("Invalid Details", false);
 			}
@@ -188,6 +203,7 @@ export class AppComponent {
 				this.showToast("Regiteration Successful", true);
 				this.cancel_login();
 				this.loginService.setLogedIn();
+				localStorage.setItem('login', <string>this.btnText);
 			} else {
 				this.showToast("Email already registered", false);
 			}

@@ -5,13 +5,11 @@ import { Injectable } from "@angular/core";
 
 export class LoginService{
 	isLogedIn: Boolean;
-	userEmail: String;
 	http: HttpClient;
 	readonly ROOT_URL;
 
 	constructor(http:HttpClient) {
 		this.isLogedIn = false;
-		this.userEmail = "";
 		this.http = http;
 		this.ROOT_URL = 'http://localhost:3000/logins';
 	}
@@ -27,7 +25,5 @@ export class LoginService{
 	setLogedIn() {this.isLogedIn = true; }
 
 	isLogged() { return this.isLogedIn; }
-
-	getEmail() { return this.userEmail.substring(0, 10); }
 
 }
