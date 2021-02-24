@@ -121,5 +121,19 @@ app.get('/projects', (req, res)=>{
 /************ PROJECT APIS ENDS ****************/
 
 
+/************ FEEDBACK APIS STARTS **************/
+// Get Project model
+const Feedback = require('./database/modules/feedback');
+
+// Send new feedback in DB
+app.post('/feedbacks', (req, res) => {
+	(new Feedback( req.body ))
+		.save()
+		.then(feedback => res.send(feedback))
+		.catch(error => res.send(''));
+});
+/************ FEEDBACK APIS ENDS ****************/
+
+
 // Start BACKEND server
 app.listen(3000, ()=>console.log("Server created at 3000."));
