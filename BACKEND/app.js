@@ -100,5 +100,26 @@ app.get('/datasheets', (req, res)=>{
 /************ DATASHEET APIS ENDS ****************/
 
 
+/************ PROJECT APIS STARTS **************/
+// Get Project model
+const Project = require('./database/modules/project');
+
+// Request to add new project in DB
+app.post('/projects', (req, res) => {
+	(new Project( req.body ))
+		.save()
+		.then(project => res.send(project))
+		.catch(error => res.send(''));
+});
+
+// Request for all porject from DB
+app.get('/projects', (req, res)=>{
+	Project.find({})
+		.then(projects => res.send(projects))
+		.catch(error => res.send(''));
+});
+/************ PROJECT APIS ENDS ****************/
+
+
 // Start BACKEND server
 app.listen(3000, ()=>console.log("Server created at 3000."));

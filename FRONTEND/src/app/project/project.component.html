@@ -4,54 +4,31 @@
 
 	<div class="accordion row" id="accordionExample">
 
-		<div class="accordion-item col-md-6 col-lg-4 rounded-2 my-3">
-			<h2 class="accordion-header" id="heading1">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-					Project Item 1
+		<div class="accordion-item col-md-6 col-lg-4 rounded-2 my-3" *ngFor="let item of PROJECTS; let i=index">
+			<h2 class="accordion-header" [id]="parseHeading(item['name'])">
+				<button class="accordion-button collapsed" type="button" aria-expanded="false"  data-bs-toggle="collapse" [attr.data-bs-target]="parseID(item['name'])" [attr.aria-controls]="item['name']">
+					{{ item['name'] }}
 				</button>
 			</h2>
-			<div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionExample" style="background:linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../assets/images/photo1.jpg) no-repeat center center/cover;">
+			<div [id]="item['name']" class="accordion-collapse collapse" [attr.aria-labelledby]="parseHeading(item['name'])" data-bs-parent="#accordionExample" [style]="parseImage(item['image'])">
 				<div class="accordion-body">
-					<strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-				</div>
-			</div>
-		</div>
-
-		<div class="accordion-item col-md-6 col-lg-4 rounded-2 my-3">
-			<h2 class="accordion-header" id="heading2">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-					Project Item 2
-				</button>
-			</h2>
-			<div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample" style="background:linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../assets/images/photo2.jpg) no-repeat center center/cover;">
-				<div class="accordion-body">
-					<strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-				</div>
-			</div>
-		</div>
-
-		<div class="accordion-item col-md-6 col-lg-4 rounded-2 my-3">
-			<h2 class="accordion-header" id="heading3">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-					Project Item 3
-				</button>
-			</h2>
-			<div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#accordionExample" style="background:linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../assets/images/photo3.jpg) no-repeat center center/cover;">
-				<div class="accordion-body">
-					<strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+					{{ item['description'] }}
 				</div>
 			</div>
 		</div>
 
 		<div class="accordion-item col-md-6 col-lg-4 rounded-2 my-3">
 			<h2 class="accordion-header" id="heading4">
-				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4" (click)=addProjects()>
+				<button id="add-new-btn" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="" aria-expanded="false" aria-controls="" (click)=addProjects()>
 					Add new
 				</button>
 			</h2>
-			<div id="add-new" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample" style="background:linear-gradient(0deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../assets/images/add_article.jpg) no-repeat center center/cover;">
+			<div id="add-new" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample" style="background:url(../../assets/images/add_article.jpg) no-repeat center center/cover;">
 				<div class="accordion-body">
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate soluta dolorum tempore doloremque ipsum dicta aliquam quo architecto minus! Omnis placeat quia porro id qui, ratione pariatur quaerat blanditiis amet.
+					<input class="projectInput w-100 my-1"  placeholder="Name" />
+					<textarea class="projectInput w-100 mt-1" placeholder="Description"></textarea>
+					<input class="projectInput w-100 mb-1" placeholder="Image URL" />
+					<button class="d-block btn btn-secondary my-1 mx-auto" (click)=submitProjects()>Submit</button>
 				</div>
 			</div>
 		</div>
