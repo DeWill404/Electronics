@@ -87,6 +87,8 @@ export class DesignComponent implements OnInit {
 					toast.classList.remove('hide');
 					toast.classList.add('show');
 				} else {
+					this.DESIGNS.push( {'name':designName, 'html':designCode} );
+
 					// Successful
 					(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Design added successfully";
 					toast.classList.remove('hide');

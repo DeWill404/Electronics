@@ -61,6 +61,8 @@ export class VideoComponent implements OnInit {
 		if ((<HTMLButtonElement>document.getElementById('inputField')).value != '') {
 			this.scrollService.uploadVideos( { 'url':(<HTMLButtonElement>document.getElementById('inputField')).value } ).subscribe((data:any) => {
 				if (data != null) {
+					this.VIDEOS.push( { 'url':(<HTMLButtonElement>document.getElementById('inputField')).value } );
+
 					// Successfull
 					(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Link added successfully";
 					toast.classList.remove('hide');

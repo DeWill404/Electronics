@@ -55,6 +55,7 @@ export class DatasheetComponent implements OnInit {
 			// Upload link
 			this.datasheetService.addSheets( { 'name':(<HTMLInputElement>document.getElementById('badge-input-name')).value, 'url':(<HTMLInputElement>document.getElementById('badge-input-url')).value } ).subscribe((data:any) => {
 				if (data != null) {
+					this.DATASHEETS.push( { 'name':(<HTMLInputElement>document.getElementById('badge-input-name')).value, 'url':(<HTMLInputElement>document.getElementById('badge-input-url')).value } );
 					// Successfull
 					(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Link added successfully";
 					toast.classList.remove('hide');

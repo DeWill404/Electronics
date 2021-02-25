@@ -83,6 +83,8 @@ export class ProjectComponent implements OnInit {
 					toast.classList.remove('hide');
 					toast.classList.add('show');
 				} else {
+					this.PROJECTS.push( { 'name':(<HTMLInputElement>document.getElementsByClassName('projectInput')[0]).value, 'description':(<HTMLInputElement>document.getElementsByClassName('projectInput')[1]).value, 'image':(<HTMLInputElement>document.getElementsByClassName('projectInput')[2]).value } );
+
 					// Successfull
 					(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Project added successfully";
 					toast.classList.remove('hide');

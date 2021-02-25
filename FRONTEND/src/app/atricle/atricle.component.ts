@@ -20,6 +20,12 @@ export class AtricleComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		// set date as currentdate
+		const d = new Date(2010, 7, 5);
+		const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+		const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+		const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+		(<HTMLInputElement>document.getElementById('inputDate')).value = `${da}-${mo}-${ye}`;
 	}
 
 
@@ -75,6 +81,7 @@ export class AtricleComponent implements OnInit {
 		let title = <HTMLTextAreaElement>document.getElementById('inputTitle');
 		let subTitle = <HTMLTextAreaElement>document.getElementById('inputSubtitle');
 		let imageLink = <HTMLInputElement>document.getElementById('inputImage');
+		let date = <HTMLTextAreaElement>document.getElementById('inputDate');
 		let body = <HTMLTextAreaElement>document.getElementById('article-editor');
 
 		// Verify inputs
@@ -83,8 +90,10 @@ export class AtricleComponent implements OnInit {
 			toast.classList.remove('hide');
 			toast.classList.add('show');
 		} else {
-			this.articleService.addArticles({ 'title':title.value, 'subtitle':subTitle.value, 'image':imageLink.value, 'body':body.value }).subscribe((data:any) => {
+			this.articleService.addArticles({ 'title':title.value, 'subtitle':subTitle.value, 'image':imageLink.value, 'date':date.value, 'body':body.value }).subscribe((data:any) => {
 				if (data != null)	{
+					this.ARTICLES.push( { 'title':title.value, 'subtitle':subTitle.value, 'image':imageLink.value, 'date':date.value, 'body':body.value } );
+					
 					// Successfull
 					(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Article posted successfully";
 					toast.classList.remove('hide');
