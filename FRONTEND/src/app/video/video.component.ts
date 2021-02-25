@@ -95,7 +95,6 @@ export class VideoComponent implements OnInit {
 
 	/* Function to play Video in Lightbox */
 	playVideo(index:number) {
-		console.log('s');
 		this.INDEX = index;
 		this.videoPlayer.src = (<HTMLVideoElement>this.videoList[this.INDEX]).src;
 		this.videoContainer.classList.remove("visually-hidden");

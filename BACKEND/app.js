@@ -16,7 +16,28 @@ app.use( (req, res, next) => {
 	next();
 } );
 
-/************** Login APIS STARTS ***************/
+/************** ARTICLE APIS STARTS ***************/
+// Get Article model
+const Article = require('./database/modules/article');
+
+// Request for saving Article data to DB
+app.post('/articles', (req, res) => {
+	(new Article( req.body ))
+		.save()
+		.then(article => res.send(article))
+		.catch(error => res.send(''));
+});
+
+// Request for getting a login password from DB
+app.get('/articles', (req, res)=>{
+	Article.find({})
+		.then(articles => res.send(articles))
+		.catch(error => res.send(''));
+});
+/************** ARTICLE APIS ENDS *****************/
+
+
+/************** LOGIN APIS STARTS ***************/
 // Get Login model
 const Login = require('./database/modules/login');
 
@@ -34,7 +55,7 @@ app.get('/logins/:email', (req, res)=>{
 		.then(login => res.send(login))
 		.catch(error => res.send(''));
 });
-/************** Login APIS ENDS *****************/
+/************** LOGIN APIS ENDS *****************/
 
 
 /************ DESIGN APIS STARTS **************/

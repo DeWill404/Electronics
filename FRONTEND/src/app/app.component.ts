@@ -35,7 +35,7 @@ export class AppComponent {
 		this.email = this.loginService.getEmail();
 
 		if ( this.loginService.isLogged() ) {	// Switch to log out state
-			this.btnText = this.loginService.getEmail().substring(0, 10);
+			this.btnText = 'Logged';
 			loginBtn.classList.add('dropdown-toggle');
 			loginBtn.setAttribute('data-bs-toggle', 'dropdown');
 			loginBtn.setAttribute('aria-expanded', 'false');

@@ -11,7 +11,7 @@ export class DatasheetComponent implements OnInit {
 
 	DATASHEETS:any[] = [];
 	title = "Electronics | Datasheet";
-	INDEX = 0;
+	INDEX = -1;
 	togglerList = document.getElementsByClassName("togglers");
 
 	constructor(private loginService:LoginService, private datasheetService:DatasheetService) {
@@ -83,13 +83,17 @@ export class DatasheetComponent implements OnInit {
 
 	/* Function to switch Datasheet */
 	switchSheet(index:number) {
-		// Switch Visibility
-		this.togglerList[this.INDEX].classList.add('btn-success');
-		this.togglerList[this.INDEX].classList.remove('btn-info');
-		this.INDEX = index;
-		this.togglerList[this.INDEX].classList.remove('btn-success');
-		this.togglerList[this.INDEX].classList.add('btn-info');
-		(<HTMLIFrameElement>document.getElementById('iframe')).src = this.DATASHEETS[this.INDEX]['url'];
+		if (this.INDEX != index) {
+			// Switch Visibility
+			if (this.INDEX != -1) {
+				this.togglerList[this.INDEX].classList.add('btn-success');
+				this.togglerList[this.INDEX].classList.remove('btn-info');
+			}
+			this.INDEX = index;
+			this.togglerList[this.INDEX].classList.remove('btn-success');
+			this.togglerList[this.INDEX].classList.add('btn-info');
+			(<HTMLIFrameElement>document.getElementById('iframe')).src = this.DATASHEETS[this.INDEX]['url'];
+		}
 	}
 
 }

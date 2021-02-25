@@ -3,7 +3,6 @@
 <main class="container">
 	<div>
 		<span class="togglers badge btn btn-success m-1" *ngFor="let item of DATASHEETS; let i=index" (click)='switchSheet(i)'>
-			<!-- <span class="togglers badge btn btn-success m-1" *ngFor="let item of DATASHEETS; let i=index" (click)='switchSheet(i)'> -->
 			{{ item['name'] }}
 		</span>
 	</div>

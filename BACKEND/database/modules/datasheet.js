@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Defining type & structure of Video
+// Defining type & structure of Datasheet
 const DatasheetSchema = new mongoose.Schema({
 	name: {
 		type: String,
