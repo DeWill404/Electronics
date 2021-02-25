@@ -133,4 +133,27 @@ export class AtricleComponent implements OnInit {
 		}
 	}
 
+	hello() {
+		console.log('ge');
+	}
+
+
+	// Function to show respective article
+	showArticle(index:number) {
+		(<HTMLDivElement>document.getElementById('article-body-container')).innerHTML =  `
+		<i class="bi bi-arrow-left-square-fill d-inline-block py-0 px-2 my-1 fs-3 btn btn-outline-secondary" onclick="document.getElementById('article-card-container').classList.remove('visually-hidden');document.getElementById('article-body-container').classList.add('visually-hidden');">Back</i>
+		<div class="p-4 p-md-5 mb-4 text-white rounded position-relative"  style="background:linear-gradient(90deg, rgba(33, 37, 41, 1), rgba(33, 37, 41, 0)), url(${this.ARTICLES[index]['image']}) no-repeat center center/cover;">
+			<div class="col-md-6 px-0">
+				<h1 class="display-4 fst-italic">${this.ARTICLES[index]['title']}</h1>
+				<p class="lead my-3">${this.ARTICLES[index]['subtitle']}</p>
+				<p class="lead my-3">${this.ARTICLES[index]['date']}</p>
+			</div>
+		</div>
+		${this.ARTICLES[index]['body']}`;
+		
+		// switch visibility
+		(<HTMLDivElement>document.getElementById('article-card-container')).classList.add('visually-hidden');
+		(<HTMLDivElement>document.getElementById('article-body-container')).classList.remove('visually-hidden');
+	}
+
 }

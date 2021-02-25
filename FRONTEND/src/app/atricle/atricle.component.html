@@ -52,7 +52,7 @@
 						<h3 class="mb-0">{{ item['title'] }}</h3>
 						<div class="mb-1 text-muted">{{ item['date'] }}</div>
 						<p class="card-text mb-auto">{{ item['subtitle'] }}</p>
-						<a href="./html/articles/article.html" class="stretched-link">Continue reading</a>
+						<a href="#" class="stretched-link" (click)="showArticle(i)">Continue reading</a>
 					</div>
 					<div class="col-auto d-none d-lg-block" [style]="parseImage(item['image'])">
 					</div>
@@ -60,6 +60,10 @@
 			</div>
 	
 		</div>
+	</div>
+
+	<!-- Article body container -->
+	<div id="article-body-container" class="visually-hidden">
 	</div>
 
 </main>
