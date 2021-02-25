@@ -10,7 +10,8 @@ import { ScrollingService } from './video/video.service';
 
 export class AppComponent {
 
-	btnText: String;
+	btnText = 'Log in';
+	email = '';
 	errText: any;
 	scrollService:ScrollingService;
 	loginService:LoginService;
@@ -19,23 +20,43 @@ export class AppComponent {
 		// Get object
 		this.loginService = loginService;
 		this.scrollService = scrollService;
-
-		// Set Login Btn text
-		this.btnText = "Log in";
 	}
 
 
 	ngOnInit(): void {
-		// If user is previously login
-		if (localStorage.getItem('login')) {
-			this.btnText = <string>localStorage.getItem('login');
-			this.loginService.setLogedIn();
+		// Sate state of login Btn
+		this.setLogBtn();
+	}
+
+	/* Method to switch login & logout state of 'Log in' btn */
+	setLogBtn() {
+		// Get log in btn
+		const loginBtn = <HTMLButtonElement>document.getElementById('login-btn');
+		this.email = this.loginService.getEmail();
+
+		if ( this.loginService.isLogged() ) {	// Switch to log out state
+			this.btnText = this.loginService.getEmail().substring(0, 10);
+			loginBtn.classList.add('dropdown-toggle');
+			loginBtn.setAttribute('data-bs-toggle', 'dropdown');
+			loginBtn.setAttribute('aria-expanded', 'false');
+		} else {	// Switch to log in state
+			this.btnText = 'Log in';
+			loginBtn.classList.remove('dropdown-toggle');
+			loginBtn.removeAttribute('data-bs-toggle');
+			loginBtn.removeAttribute('aria-expanded');
+			(<HTMLUListElement>document.getElementById('dropdown')).classList.remove('show');
 		}
 	}
 
 	/* Function to to logout */
 	logOut() {
-		console.log('press');
+		// Reset Login service
+		this.loginService.userEmail = '';
+		this.loginService.isLogedIn = false;
+		localStorage.removeItem('login');
+
+		// Reset login btn
+		this.setLogBtn();
 	}
 
 
@@ -185,12 +206,15 @@ export class AppComponent {
 			if (data.length!=0 && (<HTMLInputElement>inputList[1]).value==data[0]['password']) {
 				this.btnText = (<HTMLInputElement>inputList[0]).value.substring(0, 10);
 				this.showToast("Login Successful", true);
+				this.loginService.setLogedIn( (<HTMLInputElement>inputList[0]).value );
+				console.log("Login -> "+(<HTMLInputElement>inputList[0]).value);
 				this.cancel_login();
-				this.loginService.setLogedIn();
-				localStorage.setItem('login', <string>this.btnText);
 			} else {
 				this.showToast("Invalid Details", false);
 			}
+
+			// Switch logbtn state
+			this.setLogBtn();
 		} );
 	}
 
@@ -199,14 +223,15 @@ export class AppComponent {
 	register(inputList:HTMLCollection) {
 		this.loginService.register({ 'email':(<HTMLInputElement>inputList[3]).value.trim(), 'password':(<HTMLInputElement>inputList[4]).value.trim()}).subscribe((data:any) => {
 			if (data != null) {
-				this.btnText = data['email'].substring(0, 10);
 				this.showToast("Regiteration Successful", true);
+				this.loginService.setLogedIn( data['email'] );
 				this.cancel_login();
-				this.loginService.setLogedIn();
-				localStorage.setItem('login', <string>this.btnText);
 			} else {
 				this.showToast("Email already registered", false);
 			}
+
+			// Switch logbtn state
+			this.setLogBtn();
 		});
 	}
 
