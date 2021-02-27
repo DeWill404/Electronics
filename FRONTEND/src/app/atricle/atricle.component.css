@@ -43,3 +43,28 @@
 	position: absolute; 
 	right: 0;
 }
+
+.up-vote, .down-vote {
+	cursor: pointer;
+}
+
+.up-vote:hover {
+	color: blue;
+}
+
+.down-vote:hover {
+	color: red;
+}
+
+.comment-reply {
+	cursor: pointer;
+}
+
+.comment-reply:hover {
+	color: #6c747e;
+	text-decoration: underline;
+}
+
+.reply-input {
+	transition: all 200ms linear;
+}

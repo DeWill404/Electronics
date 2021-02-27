@@ -35,8 +35,10 @@
 
 	</div>
 
+
 	<!-- Artitcle Card container -->
 	<div id="article-card-container">
+
 		<div class="p-4 p-md-5 mb-4 text-white rounded position-relative"  style="background:linear-gradient(90deg, rgba(33, 37, 41, 1), rgba(33, 37, 41, 0.0)), url(../../assets/images/add_article.jpg) no-repeat center center/cover;">
 			<div class="col-md-6 px-0">
 				<h1 class="display-4 fst-italic">Add new Artice</h1>
@@ -45,10 +47,9 @@
 		</div>
 	
 		<div class="row">
-	
 			<div class="col-md-6" *ngFor="let item of ARTICLES; let i=index">
-				<div class="row g-0 border rounded flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col p-4 d-flex flex-column position-static">
+				<div class="row g-0 border rounded flex-md-row mb-4 shadow-sm position-relative">
+					<div class="col p-3 d-flex flex-column position-static">
 						<h3 class="mb-0">{{ item['title'] }}</h3>
 						<div class="mb-1 text-muted">{{ item['date'] }}</div>
 						<p class="card-text mb-auto">{{ item['subtitle'] }}</p>
@@ -58,12 +59,108 @@
 					</div>
 				</div>
 			</div>
-	
 		</div>
+
 	</div>
+
 
 	<!-- Article body container -->
 	<div id="article-body-container" class="visually-hidden">
+		<i class="bi bi-arrow-left-square-fill d-inline-block py-0 px-2 my-1 fs-3 btn btn-outline-secondary" (click)="openCards()">Back</i>
+		<div id="article-header-placeholder" class="px-4 py-3 text-white rounded position-relative">
+			<div class="col-md-6 px-0">
+				<h1 id="article-title-placeholder" class="display-4 fst-italic"></h1>
+				<p id="article-subtitle-placeholder" class="lead my-3"></p>
+				<p id="article-date-placeholder" class="lead my-3"></p>
+			</div>
+		</div>
+		<div id="article-body-placeholder"></div>
+
+		<!-- Comment Input -->
+		<div class="my-4 row">
+			<div class="col-md-9">
+				<input id="comment-input-tag" type="text" class="form-control w-100 m-1 mx-0" placeholder="Add comment">
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-primary m-1 mx-0" (click)="newComment()">Comment</button>
+			</div>
+		</div>
+
+		<!-- Comment view -->
+		<div class="accordion" id="accordionExample">
+			<!-- Accordon toggler -->
+			<button class="m-1 mx-0 p-2 rounded-3 fw-bold border-bottom accordion-button bg-secondary text-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#comment-list" aria-expanded="false" aria-controls="comment-list">
+				Comments
+			</button>
+
+			<!-- Accordon Body -->
+			<div id="comment-list" class="accordion-collapse collapse" aria-labelledby="header" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+
+					<!-- Comment body -->
+					<div class="commented-section mt-2" *ngFor="let comment of CHATS; let i=index;">
+
+						<hr *ngIf="i>0">
+						
+						<!-- User email -->
+						<h5 class="d-flex flex-row align-items-center commented-user" *ngIf="comment['email']==email; else userEmail">me</h5>
+						<ng-template #userEmail>
+							<h5 class="d-flex flex-row align-items-center commented-user">{{ comment['email'] }}</h5>
+						</ng-template>
+
+						<!-- Comment -->
+						<div class="comment-text-sm" style="line-height:1.2em;">
+							{{ comment['comment'] }}
+						</div>
+
+						<!-- Reply Actions -->
+						<div class="reply-action">
+							<div class="d-flex flex-row align-items-center voting-icons">
+								<!-- Upvote -->
+								<i class="fa fa-sort-up fa-2x mt-3 up-vote disabled" (click)="upVote(i)"></i>
+								<!-- Downvote -->
+								<i class="fa fa-sort-down fa-2x mb-3 down-vote" (click)="downVote(i)"></i>
+								<!-- Vote conter -->
+								<span style="margin-left:10px; color:blue; font-weight:bold;" *ngIf="comment['vote']>=0; else votes">{{ comment['vote'] }}</span>
+								<ng-template #votes>
+									<span style="margin-left:10px; color:red; font-weight:bold;">{{ comment['vote'] }}</span>
+								</ng-template>
+								<!-- Reply Input toggler -->
+								<h6 class="comment-reply" style="margin-left:10px; margin-top:4px;" (click)="showReply(i)">Reply</h6>
+							</div>
+						</div>
+
+						<!-- Reply list container -->
+						<div class="reply-container ps-3 ps-md-5 text-secondary">
+						
+							<!-- Reply -->
+							<div class="reply-body" *ngFor="let replys of comment['reply']; let j=index;">
+								<!-- Reply email -->
+								<span class="fw-bold" *ngIf="replys['email']==email; else replyEmail">me</span>
+								<ng-template #replyEmail>
+									<span class="fw-bold">{{ replys['email'] }}</span>
+								</ng-template>
+								<!-- Reply body -->
+								<p style="line-height:1.2em; margin-bottom: 2px;">{{ replys['text'] }}</p>
+							</div>
+						
+						</div>
+
+						<!-- Rely inputs -->
+						<div class="reply-input row ps-3 ps-md-5 text-secondary visually-hidden">
+							<div class="col-md-9">
+								<input type="text" class="replyInput form-control border-secondary text-secondary fw-bold w-100 m-1 mx-0" placeholder="Reply">
+							</div>
+							<div class="col-md-3">
+								<button class="btn btn-secondary m-1 mx-0" (click)="newReply(i)">Reply</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 </main>

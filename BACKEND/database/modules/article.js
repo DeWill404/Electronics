@@ -21,6 +21,10 @@ const ArticleSchema = new mongoose.Schema({
 	body: {
 		type: String,
 		required: true
+	},
+	chat: {
+		type: Array,
+		required: true
 	}
 });
 

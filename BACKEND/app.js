@@ -34,6 +34,14 @@ app.get('/articles', (req, res)=>{
 		.then(articles => res.send(articles))
 		.catch(error => res.send(''));
 });
+
+// Request to update chat in database
+app.patch('/articles/:articleId', (req, res) => {
+	console.log(req.params.articleId);
+	Article.updateOne( {"_id":req.params.articleId}, {$set:req.body} )
+		.then(articles => res.send(articles))
+		.catch(error => res.send(''));
+});
 /************** ARTICLE APIS ENDS *****************/
 
 

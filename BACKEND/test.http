@@ -17,10 +17,20 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/logins/mr.siddique@gmail.com HTTP/1.1
+PATCH http://localhost:3000/articles/6038bf99f583490fed5dfc8a HTTP/1.1
 Content-Type: application/json
+
+{
+	"title": "FIRST ARTICLE"
+}
 
 ###
 
-GET http://localhost:3000/datasheets HTTP/1.1
+GET http://localhost:3000/articles HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:3000/articles/6038bf99f583490fed5dfc8a HTTP/1.1
 Content-Type: application/json

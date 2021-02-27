@@ -21,4 +21,8 @@ export class AtricleService {
 		return this.http.post(this.ROOT_URL, payload); 
 	}
 
+	updateChats(id:any, payload:Object) {
+		return this.http.patch(`${this.ROOT_URL}/${id}`, payload);
+	}
+
 }
