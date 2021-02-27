@@ -68,3 +68,15 @@
 .reply-input {
 	transition: all 200ms linear;
 }
+
+.input-overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	text-align: center;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.7);
+}

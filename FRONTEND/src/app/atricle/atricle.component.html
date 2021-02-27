@@ -77,7 +77,10 @@
 		<div id="article-body-placeholder"></div>
 
 		<!-- Comment Input -->
-		<div class="my-4 row">
+		<div class="my-4 row position-relative">
+			<div class="input-overlay d-flex text-white justify-content-center align-items-center" *ngIf="loginService.getEmail() == ''">
+				<h3>Login to comment</h3>
+			</div>
 			<div class="col-md-9">
 				<input id="comment-input-tag" type="text" class="form-control w-100 m-1 mx-0" placeholder="Add comment">
 			</div>
@@ -114,7 +117,10 @@
 						</div>
 
 						<!-- Reply Actions -->
-						<div class="reply-action">
+						<div class="reply-action position-relative d-inline-block">
+							<div class="input-overlay d-flex text-white justify-content-center align-items-center" *ngIf="loginService.getEmail() == ''">
+								<h3>Login</h3>
+							</div>
 							<div class="d-flex flex-row align-items-center voting-icons">
 								<!-- Upvote -->
 								<i class="fa fa-sort-up fa-2x mt-3 up-vote disabled" (click)="upVote(i)"></i>

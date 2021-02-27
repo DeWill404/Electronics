@@ -16,8 +16,9 @@ export class AtricleComponent implements OnInit {
 	email:string;
 	title = "Electronics | Article";
 
-	constructor(private loginService:LoginService, private articleService:AtricleService) {
+	constructor(public loginService:LoginService, private articleService:AtricleService) {
 		this.email = loginService.getEmail();
+
 		// Get all Article data from DB
 		this.articleService.getArticles().subscribe((data:any) => {
 			this.ARTICLES = data;
@@ -170,6 +171,8 @@ export class AtricleComponent implements OnInit {
 
 	/* Method to upload comment */
 	newComment() {
+		const toast = <HTMLDivElement>document.getElementById("toast");
+		
 		const email = this.loginService.getEmail();
 		const comment = (<HTMLInputElement>document.getElementById('comment-input-tag')).value;
 		const vote = 0;
@@ -182,7 +185,6 @@ export class AtricleComponent implements OnInit {
 			(<HTMLInputElement>document.getElementById('comment-input-tag')).value = '';
 		} else {
 			// Show promt to add comment
-			const toast = <HTMLDivElement>document.getElementById("toast");
 			(<HTMLDivElement>document.getElementById("toast-body")).innerHTML = "Type comment first.";
 			toast.classList.remove('hide');
 			toast.classList.add('show');
