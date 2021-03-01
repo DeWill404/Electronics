@@ -1,27 +1,27 @@
 <div id="log-in" class="text-center visually-hidden">
 	<i id="cancel" class="bi bi-x-octagon btn btn-light rounded-3" (click)=cancel_login()></i>
 	<div id="login-wrapper">
-		<div class="logo">login</div>
+		<div class="form-logo">LOGIN</div>
 		<!-- Login body -->
 		<div class="login">
 			<div id="login-form" class="text-left">
 				<div id="login-status"></div>
 				<div class="main-login-form">
-					<div class="login-group">
+					<div class="login-group position-relative">
 						<div class="form-group">
-							<label for="lg_email" class="sr-only">Email</label>
 							<input type="email" class="inputLog form-control" id="lg_email" name="lg_email" placeholder="email">
 						</div>
 						<div class="form-group">
-							<label for="lg_password" class="sr-only">Password</label>
 							<input type="password" class="inputLog form-control" id="lg_password" name="lg_password" placeholder="password">
 						</div>
+						
 						<div class="form-group login-group-checkbox">
 							<input type="checkbox" class="inputLog" id="lg_remember" name="lg_remember">
 							<label for="lg_remember">remember</label>
 						</div>
+
+						<button type="submit" id="login-submit" class="login-button" (click)=submit(0)><i class="fa fa-chevron-right"></i></button>
 					</div>
-					<button type="submit" id="login-submit" class="login-button" (click)=submit(0)><i class="fa fa-chevron-right"></i></button>
 				</div>
 				<div class="etc-login-form">
 					<p>new user? <button class="btn" (click)=switchVisibility(0)>create new account</button></p>
@@ -30,23 +30,20 @@
 		</div>
 	</div>
 	<div id="register-wrapper" class="visually-hidden">
-		<div class="logo">register</div>
+		<div class="form-logo">REGISTER</div>
 		<!-- Register Form -->
 		<div class="login">
 			<div id="register-form" class="text-left">
 				<div id="register-status"></div>
 				<div class="main-login-form">
-					<div class="login-group">
+					<div class="login-group position-relative">
 						<div class="form-group">
-							<label for="reg_email" class="sr-only">Email</label>
 							<input type="email" class="inputLog form-control" id="reg_email" name="reg_email" placeholder="email">
 						</div>
 						<div class="form-group">
-							<label for="reg_password" class="sr-only">Password</label>
 							<input type="password" class="inputLog form-control" id="reg_password" name="reg_password" placeholder="password">
 						</div>
 						<div class="form-group">
-							<label for="reg_password_confirm" class="sr-only">Password Confirm</label>
 							<input type="password" class="inputLog form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="confirm password">
 						</div>
 						
@@ -54,8 +51,9 @@
 							<input type="checkbox" class="inputLog" id="reg_agree" name="reg_agree">
 							<label for="reg_agree">i agree with <a href="#">terms</a></label>
 						</div>
+
+						<button type="submit" id="register-submit" class="login-button" (click)=submit(1)><i class="fa fa-chevron-right"></i></button>
 					</div>
-					<button type="submit" id="register-submit" class="login-button" (click)=submit(1)><i class="fa fa-chevron-right"></i></button>
 				</div>
 				<div class="etc-login-form">
 					<p>Have an account? <button class="btn" (click)=switchVisibility(1)>login here</button></p>
@@ -67,15 +65,14 @@
 
 <div class="container">
 	<!-- Title Header -->
-	<header class="blog-header py-3">
+	<header class="app-header py-3">
 		<div class="row flex-nowrap justify-content-between align-items-center">
-			<div class="col-4">
+			<div class="col-md-4 d-none d-md-block">
 			</div>
-			<div class="col-4 text-center">
-				<h1><a class="blog-header-logo text-dark" href="#" routerLink='/'>Large</a></h1>
+			<div class="col-md-4 col-8 text-center">
+				<h1><a class="app-header-logo text-dark" href="#" routerLink='/'>Electronics</a></h1>
 			</div>
-			<div class="col-4 d-flex justify-content-end align-items-center">
-				<!-- <button class="btn btn-outline-secondary" (click)=launch_login()> {{ btnText }} </button> -->
+			<div class="col-md-4 col-4 d-flex justify-content-end align-items-center">
 				<button id="login-btn" class="btn btn-outline-secondary" (click)=launch_login()> {{ btnText }} </button>
 				<ul id="dropdown" class="dropdown-menu" style="padding-bottom: 0;">
 					<li><span class="dropdown-item">{{ email }}</span></li>
@@ -100,13 +97,13 @@
 <router-outlet></router-outlet>
 
 <!-- Footer -->
-<footer class="blog-footer">
-	<p>Website build by me.</p>
+<footer class="app-footer">
+	<p>Website build by <a href="https://DeWill404.github.io" target="_blank">DeWill404</a>.</p>
 	<a href="#" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
 </footer>
 
 <div class="position-fixed top-0 start-50 translate-middle-x pt-3" style="z-index: 8">
-	<div id="toast" class="toast border border-secondary" role="alert" aria-live="assertive" aria-atomic="true">
+	<div id="toast" class="toast border border-secondary hide" role="alert" aria-live="assertive" aria-atomic="true">
 		<div class="toast-header text-white bg-secondary">
 			<strong class="me-auto">Status</strong>
 			<button type="button" class="btn-close btn-outline-light" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('toast').classList.add('hide')"></button>
